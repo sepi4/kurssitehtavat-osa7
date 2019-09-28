@@ -1,9 +1,14 @@
 import React from 'react'
 import blogService from '../services/blogs'
 
+
 import { useField } from '../hooks/hooks'
 
-const CreateNewBlog = ({ user, addNewBlog }) => {
+
+import { connect } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
+
+const CreateNewBlog = (props) => {
   // const [title, setTitle] = useState('')
   // const [author, setAuthor] = useState('')
   // const [url, setUrl] = useState('')
@@ -18,7 +23,7 @@ const CreateNewBlog = ({ user, addNewBlog }) => {
       author: author.value,
       url: url.value,
     }
-    const b = await blogService.createBlog(user.token, newBlogObject)
+    const b = await blogService.createBlog(props.user.token, newBlogObject)
     // setTitle('')
     // setAuthor('')
     // setUrl('')
@@ -28,7 +33,8 @@ const CreateNewBlog = ({ user, addNewBlog }) => {
     resetTitle()
     resetAuthor()
     resetUrl()
-    addNewBlog(b)
+    props.addNewBlog(b)
+    props.setNotification(`added: ${b.title}`, false, 10)
   }
 
   return <div>
@@ -72,4 +78,11 @@ const CreateNewBlog = ({ user, addNewBlog }) => {
   </div>
 }
 
-export default CreateNewBlog
+const mapDispatchToProps = {
+  setNotification,
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(CreateNewBlog)

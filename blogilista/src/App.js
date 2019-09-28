@@ -7,10 +7,13 @@ import LoggedView from './components/LoggedView'
 
 import { useField } from './hooks/hooks'
 
+import { connect } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
+
 
 import './index.css'
 
-const App = () =>  {
+const App = (props) =>  {
   // const [username, setUsername] = useState('')
   const [ username, resetUsername ] =  useField('text')
   // const [password, setPassword] = useState('')
@@ -18,7 +21,7 @@ const App = () =>  {
 
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
-  // const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState(null)
 
 
   useEffect(() => {
@@ -70,13 +73,15 @@ const App = () =>  {
       // password.reset()
       resetUsername()
       resetPassword()
-      setMessage({
-        text: 'wrong username or password',
-        error: true,
-      })
-      setTimeout(() => {
-        setMessage(null)
-      }, 3000)
+
+      // setMessage({
+      //   text: 'wrong username or password',
+      //   error: true,
+      // })
+      // setTimeout(() => {
+      //   setMessage(null)
+      // }, 3000)
+      props.setNotification('wrong username or password', true, 10)
     }
   }
 
@@ -124,4 +129,11 @@ const App = () =>  {
   )
 }
 
-export default App
+const mapDispatchToProps = {
+  setNotification,
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(App)
