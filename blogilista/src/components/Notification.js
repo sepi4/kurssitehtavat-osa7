@@ -6,8 +6,6 @@ const Notification = (props) => {
     return null
   }
 
-
-  //TODO <div className={props.message.error ? 'error' : 'success'}>
   return (
     <div className={props.notification.error ? 'error' : 'success'}>
       {props.notification.text}

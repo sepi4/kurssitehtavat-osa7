@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import loginService from './services/login'
-import blogService from './services/blogs'
 
 import LoginForm from './components/LoginForm'
 import LoggedView from './components/LoggedView'
@@ -9,6 +8,9 @@ import { useField } from './hooks/hooks'
 
 import { connect } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
+import { initBlogs, addBlog } from './reducers/blogReducer'
+
+
 
 
 import './index.css'
@@ -20,8 +22,6 @@ const App = (props) =>  {
   const [ password, resetPassword ] =  useField('password')
 
   const [user, setUser] = useState(null)
-  const [blogs, setBlogs] = useState([])
-  const [message, setMessage] = useState(null)
 
 
   useEffect(() => {
@@ -30,25 +30,9 @@ const App = (props) =>  {
       const user = JSON.parse(loggedUserJson)
       setUser(user)
     }
+    props.initBlogs()
+  }, [props])
 
-    blogService
-      .getAll()
-      .then(bs => setBlogs(bs))
-  }, [])
-
-  const handleRemove = async blog => {
-
-    const confirm = window.confirm(`Are you sure you want to remove "${blog.title}" by ${blog.author}?`)
-    if (confirm ) {
-      await blogService.removeBlog(blog, user.token)
-      setBlogs(blogs.filter(b => b.id !== blog.id))
-    }
-  }
-
-  const handleLike = async blog => {
-    const updatedBlog = await blogService.likeBlog(blog)
-    setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
-  }
 
   const handleLogin = async e => {
     try {
@@ -74,13 +58,6 @@ const App = (props) =>  {
       resetUsername()
       resetPassword()
 
-      // setMessage({
-      //   text: 'wrong username or password',
-      //   error: true,
-      // })
-      // setTimeout(() => {
-      //   setMessage(null)
-      // }, 3000)
       props.setNotification('wrong username or password', true, 10)
     }
   }
@@ -90,17 +67,6 @@ const App = (props) =>  {
     window.localStorage.removeItem('loggedBlogappUser')
   }
 
-  const handleAddNewBlog = newBlog => {
-    setBlogs(blogs.concat(newBlog))
-    setMessage({
-      text: `you added new blog '${newBlog.title}', by ${newBlog.author}`,
-      error: false,
-    })
-    setTimeout(() => {
-      setMessage(null)
-    }, 3000)
-  }
-
 
 
   return (
@@ -108,7 +74,6 @@ const App = (props) =>  {
 
       {user === null
         ?  <LoginForm
-          message={message}
           username={username.value}
           password={password.value}
           setUsername={username.onChange}
@@ -116,13 +81,8 @@ const App = (props) =>  {
           handleLogin={handleLogin}
         />
         : <LoggedView
-          blogs={blogs}
           user={user}
           handleLogout={handleLogout}
-          handleAddNewBlog={handleAddNewBlog}
-          handleLike={handleLike}
-          handleRemove={handleRemove}
-          message={message}
         />
       }
     </div>
@@ -131,6 +91,8 @@ const App = (props) =>  {
 
 const mapDispatchToProps = {
   setNotification,
+  initBlogs,
+  addBlog,
 }
 
 export default connect(

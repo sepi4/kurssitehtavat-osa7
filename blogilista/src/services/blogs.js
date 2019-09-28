@@ -17,11 +17,6 @@ const createBlog = async (token, newObject) => {
 const likeBlog = async blog => {
   const blogObjToUpdate = {
     _id: blog.id,
-    // user: {
-    //   _id: blog.user.id,
-    //   username: blog.user.username,
-    //   name: blog.user.name,
-    // },
     user: blog.user.id,
     likes: blog.likes + 1,
     author: blog.author,

@@ -1,20 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 
 import Blog from './Blog'
 
-const BlogsList = ({ blogs, handleLike, handleRemove, user }) => {
+const BlogsList = (props) => {
 
-  const sortedBlogs = blogs.sort((a, b) => -(a.likes - b.likes))
+  const sortedBlogs = props.blogit.sort((a, b) => -(a.likes - b.likes))
 
-  return blogs.length > 0
+  // console.log(props.blogit)
+  return props.blogit.length > 0
     ?
     <ul>{sortedBlogs.map(
       blog => <li key={blog.id}>
         <Blog
           blog={blog}
-          handleLike={handleLike}
-          handleRemove={handleRemove}
-          user={user}
+          handleLike={props.handleLike}
+          user={props.user}
         />
       </li>)}
     </ul>
@@ -22,5 +24,13 @@ const BlogsList = ({ blogs, handleLike, handleRemove, user }) => {
     null
 }
 
+const mapStateToProps = state => {
+  return {
+    blogit: state.blogs,
+  }
+}
 
-export default BlogsList
+export default connect(
+  mapStateToProps,
+  null,
+)(BlogsList)

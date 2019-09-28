@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-const Blog = ({ blog, handleLike, handleRemove, user }) => {
+
+import { connect } from 'react-redux'
+
+import { likeBlog, removeBlog } from '../reducers/blogReducer'
+
+const Blog = props => {
   const [showAll, setShowAll] = useState(false)
 
   const divStyle = {
@@ -7,6 +12,14 @@ const Blog = ({ blog, handleLike, handleRemove, user }) => {
     padding: '1px 15px',
     margin: '10px 0',
   }
+
+  const handleRemoveBlog = () => {
+    const confirm = window.confirm(`Are you sure you want to remove "${props.blog.title}" by ${props.blog.author}?`)
+    if (confirm ) {
+      props.removeBlog(props.blog, props.user.token)
+    }
+  }
+
   return (
     <div>
 
@@ -16,20 +29,19 @@ const Blog = ({ blog, handleLike, handleRemove, user }) => {
           <h2 style={{ cursor: 'pointer' }} onClick={() => {
             setShowAll(!showAll)
           }}>
-            {blog.title}
+            {props.blog.title}
           </h2>
-          <div>author: {blog.author}</div>
-          <div>added by: {blog.user.name ? blog.user.name : blog.user.username}</div>
-          <div>url: <a href={blog.url}>{blog.url}</a></div>
-          <div>likes: {blog.likes}
+          <div>author: {props.blog.author}</div>
+          <div>added by: {props.blog.user.name ? props.blog.user.name : props.blog.user.username}</div>
+          <div>url: <a href={props.blog.url}>{props.blog.url}</a></div>
+          <div>likes: {props.blog.likes}
             <button
-              onClick={() => { handleLike(blog) }}
-            >
-                  like
+              onClick={() => { props.likeBlog(props.blog) }}
+            >like
             </button>
           </div>
-          {user.id === blog.user.id
-            ? <button onClick={() => handleRemove(blog)}>remove</button>
+          {props.user.id === props.blog.user.id
+            ? <button onClick={handleRemoveBlog} >remove</button>
             : null
           }
         </div>
@@ -43,7 +55,7 @@ const Blog = ({ blog, handleLike, handleRemove, user }) => {
           >
             <strong
               className="title"
-            >{blog.title}</strong>, by {blog.author}
+            >{props.blog.title}</strong>, by {props.blog.author}
           </div>
         </div>
       }
@@ -51,4 +63,12 @@ const Blog = ({ blog, handleLike, handleRemove, user }) => {
   )
 }
 
-export default Blog
+const mapDispatchToProps = {
+  likeBlog,
+  removeBlog,
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Blog)

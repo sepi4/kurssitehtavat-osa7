@@ -1,17 +1,12 @@
 import React from 'react'
-import blogService from '../services/blogs'
-
 
 import { useField } from '../hooks/hooks'
 
-
 import { connect } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
+import { addBlog } from '../reducers/blogReducer'
 
 const CreateNewBlog = (props) => {
-  // const [title, setTitle] = useState('')
-  // const [author, setAuthor] = useState('')
-  // const [url, setUrl] = useState('')
   const [ title, resetTitle ] = useField('text')
   const [ author, resetAuthor ] = useField('text')
   const [ url, resetUrl] = useField('text')
@@ -23,18 +18,11 @@ const CreateNewBlog = (props) => {
       author: author.value,
       url: url.value,
     }
-    const b = await blogService.createBlog(props.user.token, newBlogObject)
-    // setTitle('')
-    // setAuthor('')
-    // setUrl('')
-    // title.reset()
-    // author.reset()
-    // url.reset()
+    props.addBlog(newBlogObject, props.user)
+    props.setNotification(`added: ${newBlogObject.title}`, false, 10)
     resetTitle()
     resetAuthor()
     resetUrl()
-    props.addNewBlog(b)
-    props.setNotification(`added: ${b.title}`, false, 10)
   }
 
   return <div>
@@ -43,9 +31,6 @@ const CreateNewBlog = (props) => {
       <div>
         title:
         <input
-          // value={title}
-          // onChange={e => setTitle(e.target.value)}
-          // type="text"
           {...title}
           name="title"
         />
@@ -53,9 +38,6 @@ const CreateNewBlog = (props) => {
       <div>
         author
         <input
-          // type="text"
-          // value={author}
-          // onChange={e => setAuthor(e.target.value)}
           {...author}
           name="author"
         />
@@ -63,9 +45,6 @@ const CreateNewBlog = (props) => {
       <div>
         url
         <input
-          // type="text"
-          // value={url}
-          // onChange={e => setUrl(e.target.value)}
           {...url}
           name="url"
         />
@@ -80,6 +59,7 @@ const CreateNewBlog = (props) => {
 
 const mapDispatchToProps = {
   setNotification,
+  addBlog,
 }
 
 export default connect(
