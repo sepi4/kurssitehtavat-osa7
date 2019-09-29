@@ -17,14 +17,23 @@
   margin-bottom: 10px;
 }
 
-.blog-ul {
-  list-style-type: none;
-  padding: 0;
+div.navbar {
+  margin: -8px;
 }
 
-.blog-li {
-  border-style: solid;
-  margin: 0.2rem;
-  border-width: 1px;
-  padding: 0.5rem;
+ul.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f3f3f3;
 }
+
+ul.navbar li {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: .5rem;
+  text-decoration: none;
+}
+

@@ -8,6 +8,7 @@ import BlogsList from './BlogsList'
 import Users from './Users'
 import User from './User'
 import Blog from './Blog'
+import Navbar from './Navbar'
 
 import { logoutUser } from '../reducers/userReducer'
 import { connect } from 'react-redux'
@@ -21,10 +22,9 @@ const LoggedView = (props) => {
   return (
     <Router>
       <div>
-        <h1>blogs</h1>
-        <p>{props.user.name ? props.user.name : props.user.username} is logged in
-          <button onClick={() => { props.logoutUser() }}>logout</button>
-        </p>
+        <Navbar />
+
+        <h1>blog app</h1>
 
         <Route exact path='/users' render={() => <Users />} />
 
