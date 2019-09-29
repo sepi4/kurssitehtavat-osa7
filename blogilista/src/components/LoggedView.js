@@ -5,26 +5,38 @@ import Notification from './Notification'
 import CreateNewBlog from './CreateNewBlog'
 import Togglable from './Togglable'
 import BlogsList from './BlogsList'
+import Users from './Users'
 
 import { logoutUser } from '../reducers/userReducer'
 import { connect } from 'react-redux'
 
+import { BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
+
 const LoggedView = (props) => {
 
   return (
-    <div>
-      <h1>Blogs</h1>
-      <p>{props.user.name ? props.user.name : props.user.username} is logged in
-        <button onClick={() => { props.logoutUser() }}>logout</button>
-      </p>
-      <Notification />
-      <Togglable buttonLabel="new blog">
-        <CreateNewBlog />
-      </Togglable>
-      <BlogsList
-        user={props.user}
-      />
-    </div>
+    <Router>
+      <div>
+        <h1>blogs</h1>
+        <p>{props.user.name ? props.user.name : props.user.username} is logged in
+          <button onClick={() => { props.logoutUser() }}>logout</button>
+        </p>
+        <Route exact path='/users' render={() => <Users />} />
+        <Route exact path='/' render={() =>
+          <>
+            <Notification />
+            <Togglable buttonLabel="new blog">
+              <CreateNewBlog />
+            </Togglable>
+            <BlogsList
+              user={props.user}
+            />
+          </>
+        }/>
+      </div>
+    </Router>
   )
 }
 
