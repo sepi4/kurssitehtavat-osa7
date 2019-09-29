@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 
-import Blog from './Blog'
+// import Blog from './Blog'
 
 const BlogsList = (props) => {
 
@@ -10,13 +11,10 @@ const BlogsList = (props) => {
 
   return props.blogit.length > 0
     ?
+
     <ul>{sortedBlogs.map(
       blog => <li key={blog.id}>
-        <Blog
-          blog={blog}
-          handleLike={props.handleLike}
-          user={props.user}
-        />
+        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
       </li>)}
     </ul>
     :

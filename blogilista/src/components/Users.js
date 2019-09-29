@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-
 const Users = (props) => {
 
   const usersTable = () => {
@@ -20,12 +19,10 @@ const Users = (props) => {
       }
       return pre
     }, {})
-    // console.log(usersObj)
 
     const users = Object.keys(usersObj)
       .map(key => usersObj[key] )
       .sort((a, b) => b.blogs - a.blogs)
-    // console.log(users)
 
     return (
       <table>
