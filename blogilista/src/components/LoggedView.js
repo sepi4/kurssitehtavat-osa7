@@ -6,6 +6,7 @@ import CreateNewBlog from './CreateNewBlog'
 import Togglable from './Togglable'
 import BlogsList from './BlogsList'
 import Users from './Users'
+import User from './User'
 
 import { logoutUser } from '../reducers/userReducer'
 import { connect } from 'react-redux'
@@ -24,6 +25,10 @@ const LoggedView = (props) => {
           <button onClick={() => { props.logoutUser() }}>logout</button>
         </p>
         <Route exact path='/users' render={() => <Users />} />
+        <Route exact path='/users/:id' render={({ match }) =>
+          <User params={match.params.id}/>
+        }/>
+
         <Route exact path='/' render={() =>
           <>
             <Notification />
@@ -35,6 +40,7 @@ const LoggedView = (props) => {
             />
           </>
         }/>
+
       </div>
     </Router>
   )

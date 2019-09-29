@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 
 const Users = (props) => {
@@ -10,21 +11,21 @@ const Users = (props) => {
     }
 
     const usersObj = props.blogs.reduce((pre, cur) => {
-      if (pre[cur.user.name] || pre[cur.user.username]) {
-        cur.user.name ? pre[cur.user.name] += 1 : pre[cur.user.username] += 1
+      if (pre[cur.user.id]) {
+        pre[cur.user.id].blogs += 1
       }
       else {
-        cur.user.name ? pre[cur.user.name] = 1 : pre[cur.user.username] = 1
+        pre[cur.user.id] = cur.user
+        pre[cur.user.id].blogs = 1
       }
       return pre
     }, {})
+    // console.log(usersObj)
 
-    const users = Object.keys(usersObj).map(key => {
-      return {
-        name: key,
-        blogs: usersObj[key],
-      }
-    }).sort((a, b) => b.blogs - a.blogs)
+    const users = Object.keys(usersObj)
+      .map(key => usersObj[key] )
+      .sort((a, b) => b.blogs - a.blogs)
+    // console.log(users)
 
     return (
       <table>
@@ -38,8 +39,8 @@ const Users = (props) => {
 
         <tbody>
           {users.map(u =>
-            <tr key={u.name}>
-              <td>{u.name}</td>
+            <tr key={u.id}>
+              <td><Link to={`/users/${u.id}`}>{u.name ? u.name : u.username}</Link></td>
               <td>{u.blogs}</td>
             </tr>
           )}
