@@ -9,10 +9,6 @@ const LoginForm = (props) => {
 
   const loggaa = (e) => {
     e.preventDefault()
-    // props.loginUser({
-    //   username:props.username,
-    //   password:props.password,
-    // })
     props.loginUser({
       username: e.target.username.value,
       password: e.target.password.value,
@@ -25,22 +21,20 @@ const LoginForm = (props) => {
         <h1>log in to application</h1>
         <Notification />
         <div>
-          username
-          <input
-            type='text'
-            name='username'
-            // value={props.username}
-            // onChange={props.setUsername}
-          />
+          <label>username
+            <input
+              type='text'
+              name='username'
+            />
+          </label>
         </div>
         <div>
-          password
-          <input
-            type='password'
-            name='password'
-            // value={props.password}
-            // onChange={props.setPassword}
-          />
+          <label>password
+            <input
+              type='password'
+              name='password'
+            />
+          </label>
         </div>
         <div>
           <input type="submit" value="login" />

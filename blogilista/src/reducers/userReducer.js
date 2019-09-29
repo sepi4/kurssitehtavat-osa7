@@ -18,7 +18,6 @@ export const loginUser = credentials => {
 }
 
 export const logoutUser = () => {
-  console.log('logoutUser')
   return dispatch => {
     window.localStorage.removeItem('loggedBlogappUser')
     dispatch({
@@ -26,7 +25,6 @@ export const logoutUser = () => {
     })
   }
 }
-
 
 export const checkLocalStorage = () => {
   return dispatch => {

@@ -19,8 +19,7 @@ const LoggedView = (props) => {
       </p>
       <Notification />
       <Togglable buttonLabel="new blog">
-        <CreateNewBlog
-        />
+        <CreateNewBlog />
       </Togglable>
       <BlogsList
         user={props.user}
