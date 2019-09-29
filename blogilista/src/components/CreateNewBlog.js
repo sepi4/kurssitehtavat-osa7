@@ -57,12 +57,18 @@ const CreateNewBlog = (props) => {
   </div>
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
 const mapDispatchToProps = {
   setNotification,
   addBlog,
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(CreateNewBlog)

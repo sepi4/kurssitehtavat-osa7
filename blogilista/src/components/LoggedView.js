@@ -6,32 +6,45 @@ import CreateNewBlog from './CreateNewBlog'
 import Togglable from './Togglable'
 import BlogsList from './BlogsList'
 
-const LoggedView = ({
-  user,
-  handleLogout,
-}) => {
+import { logoutUser } from '../reducers/userReducer'
+import { connect } from 'react-redux'
+
+const LoggedView = (props) => {
 
   return (
     <div>
       <h1>Blogs</h1>
-      <p>{user.name ? user.name : user.username} is logged in
-        <button onClick={handleLogout}>logout</button>
+      <p>{props.user.name ? props.user.name : props.user.username} is logged in
+        <button onClick={() => { props.logoutUser() }}>logout</button>
       </p>
       <Notification />
       <Togglable buttonLabel="new blog">
         <CreateNewBlog
-          user={user}
         />
       </Togglable>
       <BlogsList
-        user={user}
+        user={props.user}
       />
     </div>
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  logoutUser,
+}
+
 LoggedView.propTypes = {
   user: PropTypes.object.isRequired,
-  handleLogout: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 }
-export default LoggedView
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoggedView)

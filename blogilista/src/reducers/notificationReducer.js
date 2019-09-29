@@ -26,7 +26,6 @@ export const setNotification = (text, error, sec) => {
 const reducer = (state = null, action) => {
   switch(action.type) {
     case 'MAKE_NOTIFICATION':
-      // console.log('MAKE_NOTIFICATION')
       return action.data
 
     case 'CLEAN_NOTIFICATION':

@@ -1,40 +1,45 @@
 import React from 'react'
 import Notification from './Notification'
 
-// import { useField } from '../hooks/hooks'
+import { connect } from 'react-redux'
+import { loginUser } from '../reducers/userReducer'
 
 
-const LoginForm = ({
-  message,
-  username,
-  password,
-  setUsername,
-  setPassword,
-  handleLogin
-}) => {
+const LoginForm = (props) => {
 
-  // const usernameArg = useField('text', username, setUsername)
-  // const passwordArg = useField('password', password, setPassword)
+  const loggaa = (e) => {
+    e.preventDefault()
+    // props.loginUser({
+    //   username:props.username,
+    //   password:props.password,
+    // })
+    props.loginUser({
+      username: e.target.username.value,
+      password: e.target.password.value,
+    })
+  }
 
   return (
     <div >
-      <form onSubmit={handleLogin}>
+      <form onSubmit={loggaa}>
         <h1>log in to application</h1>
-        <Notification message={message} />
+        <Notification />
         <div>
           username
           <input
             type='text'
-            value={username}
-            onChange={setUsername}
+            name='username'
+            // value={props.username}
+            // onChange={props.setUsername}
           />
         </div>
         <div>
           password
           <input
             type='password'
-            value={password}
-            onChange={setPassword}
+            name='password'
+            // value={props.password}
+            // onChange={props.setPassword}
           />
         </div>
         <div>
@@ -45,4 +50,11 @@ const LoginForm = ({
   )
 }
 
-export default LoginForm
+const mapDispatchToProps = {
+  loginUser
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(LoginForm)
