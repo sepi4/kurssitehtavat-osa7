@@ -15,7 +15,7 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response, next) => {
   try {
-    console.log(request.token)
+    // console.log(request.token)
     const token = request.token
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
@@ -69,6 +69,25 @@ blogsRouter.delete('/:id', async (request, response, next) => {
     else {
       response.status(401).json({ error: 'user and blog IDs don not match' })
     }
+  }
+  catch (exception) {
+    next(exception)
+  }
+})
+
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+  try {
+    console.log(request)
+    const commentToAdd = request.body.comment
+    if (commentToAdd.length === 0) {
+      return response.status(400).json({ error: 'empty comment' })
+    }
+    const blogId = request.params.id
+    const blogToUpdate = await Blog.findById(blogId)
+    blogToUpdate.comments.push(commentToAdd)
+
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blogToUpdate, { new: true })
+    response.json(updatedBlog.toJSON())
   }
   catch (exception) {
     next(exception)

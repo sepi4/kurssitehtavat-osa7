@@ -22,6 +22,7 @@ const Blog = props => {
     }
   }
 
+
   return ( <div>
     <div >
       <h2>
@@ -38,6 +39,15 @@ const Blog = props => {
       {props.user.id === blog.user.id
         ? <button onClick={handleRemoveBlog} >remove</button>
         : null
+      }
+    </div>
+    <div>
+      <h3>comments</h3>
+      {blog.comments.length > 0
+        ? <ul>
+          {blog.comments.map(c => <li key={c}>{c}</li>)}
+        </ul>
+        :  null
       }
     </div>
   </div>

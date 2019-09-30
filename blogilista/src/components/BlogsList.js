@@ -9,6 +9,7 @@ const BlogsList = (props) => {
 
   const sortedBlogs = props.blogit.sort((a, b) => -(a.likes - b.likes))
 
+  console.log(props.blogit)
   return props.blogit.length > 0
     ?
 
