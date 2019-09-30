@@ -5,22 +5,32 @@ import { compose } from 'redux'
 
 import { logoutUser } from '../reducers/userReducer'
 
+import {
+  Menu,
+  Button,
+} from 'semantic-ui-react'
+
 const Navbar = (props) => {
+
+  const logout = () => {
+    props.logoutUser()
+    props.history.push('/')
+  }
+
   return (
-    <div className='navbar'>
-      <ul className='navbar'>
-        <li><Link to={'/'}>Blogs</Link></li>
-        <li><Link to={'/users'}>Users</Link></li>
-        <li>
+    <div>
+      <Menu>
+        <Menu.Item><Link to={'/'}>Blogs</Link></Menu.Item>
+        <Menu.Item><Link to={'/users'}>Users</Link></Menu.Item>
+        <Menu.Item position='right'>
           {props.user.name
             ? props.user.name
-            : props.user.username} is logged in
-          <button onClick={() => {
-            props.logoutUser()
-            props.history.push('/')
-          }}>logout</button>
-        </li>
-      </ul>
+            : props.user.username} is logged in <Button
+            floated='right'
+            size='mini'
+            onClick={logout}>logout</Button>
+        </Menu.Item>
+      </Menu>
     </div>
   )
 }

@@ -1,6 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import {
+  List,
+} from 'semantic-ui-react'
+
 
 const User = (props) => {
   const userId = props.params
@@ -13,9 +17,9 @@ const User = (props) => {
   const blogsList = () => {
     return <>
       <h3>added blogs</h3>
-      <ul>
-        {userBlogs.map(b => <li key={b.id}>{b.title}</li>)}
-      </ul>
+      <List divided relaxed>
+        {userBlogs.map(b => <List.Item key={b.id}>{b.title}</List.Item>)}
+      </List>
     </>
   }
 

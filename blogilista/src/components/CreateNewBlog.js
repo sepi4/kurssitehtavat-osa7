@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { addBlog } from '../reducers/blogReducer'
 
+import {
+  Form,
+  Button,
+} from 'semantic-ui-react'
+
 const CreateNewBlog = (props) => {
 
   const handleCreateBlog = async e => {
@@ -12,6 +17,10 @@ const CreateNewBlog = (props) => {
       title: e.target.title.value,
       author: e.target.author.value,
       url: e.target.url.value,
+    }
+
+    if (!newBlogObject.title || newBlogObject.title.length === 0) {
+      return
     }
 
     props.addBlog(newBlogObject, props.user)
@@ -23,22 +32,24 @@ const CreateNewBlog = (props) => {
   }
 
   return <div>
-    <form onSubmit={handleCreateBlog}>
-      <h2>Create new blog</h2>
-      <div>
-        title <input name="title" />
-      </div>
-      <div>
-        author <input name="author" />
-      </div>
-      <div>
-        url <input name="url" />
-      </div>
-      <div>
-        <input type="submit" value="create" />
-      </div>
-    </form>
-
+    <Form onSubmit={handleCreateBlog}>
+      <h2>create new blog</h2>
+      <Form.Field>
+        <label>title</label>
+        <input name="title" />
+      </Form.Field>
+      <Form.Field>
+        <label>author</label>
+        <input name="author" />
+      </Form.Field>
+      <Form.Field>
+        <label>url</label>
+        <input name="url" />
+      </Form.Field>
+      <Form.Field>
+        <Button primary type="submit">create</Button>
+      </Form.Field>
+    </Form>
   </div>
 }
 

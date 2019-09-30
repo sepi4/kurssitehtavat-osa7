@@ -3,6 +3,14 @@ import { connect } from 'react-redux'
 
 import { commentBlog } from '../reducers/blogReducer'
 
+import {
+  Form,
+  Button,
+  List,
+  Segment,
+} from 'semantic-ui-react'
+
+
 function Comments(props) {
   const blog = props.blog
 
@@ -14,19 +22,23 @@ function Comments(props) {
   }
 
   return (
-    <div>
+    <Segment>
       <h3>comments</h3>
-      <form onSubmit={handleCommentBlog}>
-        <input type='text' name='comment' />
-        <input type="submit" value="add comment" />
-      </form>
+      <Form onSubmit={handleCommentBlog}>
+        <Form.Field>
+          <input type='text' floated='left' name='comment' />
+        </Form.Field>
+        <Form.Field>
+          <Button type="submit" >add comment</Button>
+        </Form.Field>
+      </Form>
       {blog.comments.length > 0
-        ? <ul>
-          {blog.comments.map(c => <li key={c}>{c}</li>)}
-        </ul>
+        ? <List bulleted>
+          {blog.comments.map(c => <List.Item key={c}>{c}</List.Item>)}
+        </List>
         :  null
       }
-    </div>
+    </Segment>
   )
 }
 

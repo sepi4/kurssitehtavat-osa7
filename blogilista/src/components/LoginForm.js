@@ -4,6 +4,11 @@ import Notification from './Notification'
 import { connect } from 'react-redux'
 import { loginUser } from '../reducers/userReducer'
 
+import {
+  Form,
+  Button,
+} from 'semantic-ui-react'
+
 
 const LoginForm = (props) => {
 
@@ -17,29 +22,29 @@ const LoginForm = (props) => {
 
   return (
     <div >
-      <form onSubmit={loggaa}>
+      <Form onSubmit={loggaa}>
         <h1>log in to application</h1>
         <Notification />
-        <div>
+        <Form.Field>
           <label>username
             <input
               type='text'
               name='username'
             />
           </label>
-        </div>
-        <div>
+        </Form.Field>
+        <Form.Field>
           <label>password
             <input
               type='password'
               name='password'
             />
           </label>
-        </div>
-        <div>
-          <input type="submit" value="login" />
-        </div>
-      </form>
+        </Form.Field>
+        <Form.Field>
+          <Button type="submit">login</Button>
+        </Form.Field>
+      </Form>
     </div>
   )
 }

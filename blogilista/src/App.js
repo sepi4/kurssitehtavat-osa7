@@ -8,6 +8,8 @@ import { connect } from 'react-redux'
 import { initBlogs } from './reducers/blogReducer'
 import { checkLocalStorage } from './reducers/userReducer'
 
+import { Container } from 'semantic-ui-react'
+
 import './index.css'
 
 const App = (props) =>  {
@@ -20,12 +22,14 @@ const App = (props) =>  {
 
 
   return (
-    <div>
-      {props.user === null
-        ?  <LoginForm />
-        : <LoggedView />
-      }
-    </div>
+    <Container>
+      <div>
+        {props.user === null
+          ?  <LoginForm />
+          : <LoggedView />
+        }
+      </div>
+    </Container>
   )
 }
 
