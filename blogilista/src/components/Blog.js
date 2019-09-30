@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 
-import { likeBlog, removeBlog } from '../reducers/blogReducer'
+import { likeBlog, removeBlog, commentBlog } from '../reducers/blogReducer'
 import { withRouter } from 'react-router-dom'
 
 const Blog = props => {
@@ -20,6 +20,13 @@ const Blog = props => {
       props.removeBlog(blog, props.user.token)
       props.history.push('/')
     }
+  }
+
+  const handleCommentBlog = e => {
+    e.preventDefault()
+    const comment = e.target.comment.value
+    props.commentBlog(blog, comment)
+    e.target.comment.value = ''
   }
 
 
@@ -43,6 +50,10 @@ const Blog = props => {
     </div>
     <div>
       <h3>comments</h3>
+      <form onSubmit={handleCommentBlog}>
+        <input type='text' name='comment' />
+        <input type="submit" value="add comment" />
+      </form>
       {blog.comments.length > 0
         ? <ul>
           {blog.comments.map(c => <li key={c}>{c}</li>)}
@@ -64,6 +75,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   likeBlog,
   removeBlog,
+  commentBlog,
 }
 
 export default compose(
