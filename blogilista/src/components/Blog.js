@@ -1,13 +1,9 @@
 import React from 'react'
 
 import Comments from './Comments'
+import BlogContent from './BlogContent'
 
 import { connect } from 'react-redux'
-import { compose } from 'redux'
-
-
-import { likeBlog, removeBlog, commentBlog } from '../reducers/blogReducer'
-import { withRouter } from 'react-router-dom'
 
 const Blog = props => {
   const blogId = props.params
@@ -16,35 +12,9 @@ const Blog = props => {
     return null
   }
 
-  const handleRemoveBlog = () => {
-    const confirm = window.confirm(`Are you sure you want to remove "${blog.title}" by ${blog.author}?`)
-    if (confirm ) {
-      props.removeBlog(blog, props.user.token)
-      props.history.push('/')
-    }
-  }
-
-
-
   return (
     <div>
-      <div >
-        <h2>
-          {blog.title}
-        </h2>
-        <div>author: {blog.author}</div>
-        <div>added by: {blog.user.name ? blog.user.name : blog.user.username}</div>
-        <div>url: <a href={blog.url}>{blog.url}</a></div>
-        <div>likes: {blog.likes}
-          <button onClick={() => { props.likeBlog(blog) }}
-          >like
-          </button>
-        </div>
-        {props.user.id === blog.user.id
-          ? <button onClick={handleRemoveBlog} >remove</button>
-          : null
-        }
-      </div>
+      <BlogContent blog={blog} />
       <Comments blog={blog} />
     </div>
   )
@@ -53,17 +23,8 @@ const Blog = props => {
 const mapStateToProps = state => {
   return {
     blogs: state.blogs,
-    user: state.user,
   }
 }
 
-const mapDispatchToProps = {
-  likeBlog,
-  removeBlog,
-  commentBlog,
-}
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(Blog)
+export default connect(mapStateToProps, null)(Blog)

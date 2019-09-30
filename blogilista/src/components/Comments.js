@@ -34,7 +34,4 @@ const mapDispatchToProps = {
   commentBlog,
 }
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Comments)
+export default connect(null, mapDispatchToProps)(Comments)
