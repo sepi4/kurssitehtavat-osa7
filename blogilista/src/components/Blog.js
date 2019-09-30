@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Comments from './Comments'
+
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
@@ -22,46 +24,29 @@ const Blog = props => {
     }
   }
 
-  const handleCommentBlog = e => {
-    e.preventDefault()
-    const comment = e.target.comment.value
-    props.commentBlog(blog, comment)
-    e.target.comment.value = ''
-  }
 
 
-  return ( <div>
-    <div >
-      <h2>
-        {blog.title}
-      </h2>
-      <div>author: {blog.author}</div>
-      <div>added by: {blog.user.name ? blog.user.name : blog.user.username}</div>
-      <div>url: <a href={blog.url}>{blog.url}</a></div>
-      <div>likes: {blog.likes}
-        <button onClick={() => { props.likeBlog(blog) }}
-        >like
-        </button>
-      </div>
-      {props.user.id === blog.user.id
-        ? <button onClick={handleRemoveBlog} >remove</button>
-        : null
-      }
-    </div>
+  return (
     <div>
-      <h3>comments</h3>
-      <form onSubmit={handleCommentBlog}>
-        <input type='text' name='comment' />
-        <input type="submit" value="add comment" />
-      </form>
-      {blog.comments.length > 0
-        ? <ul>
-          {blog.comments.map(c => <li key={c}>{c}</li>)}
-        </ul>
-        :  null
-      }
+      <div >
+        <h2>
+          {blog.title}
+        </h2>
+        <div>author: {blog.author}</div>
+        <div>added by: {blog.user.name ? blog.user.name : blog.user.username}</div>
+        <div>url: <a href={blog.url}>{blog.url}</a></div>
+        <div>likes: {blog.likes}
+          <button onClick={() => { props.likeBlog(blog) }}
+          >like
+          </button>
+        </div>
+        {props.user.id === blog.user.id
+          ? <button onClick={handleRemoveBlog} >remove</button>
+          : null
+        }
+      </div>
+      <Comments blog={blog} />
     </div>
-  </div>
   )
 }
 

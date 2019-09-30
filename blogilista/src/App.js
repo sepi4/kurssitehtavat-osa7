@@ -11,12 +11,16 @@ import { checkLocalStorage } from './reducers/userReducer'
 import './index.css'
 
 const App = (props) =>  {
+  console.log('App')
+  console.log(props)
 
   const { checkLocalStorage, initBlogs } = props
   useEffect(() => {
+    console.log('useEffect')
     checkLocalStorage()
     initBlogs()
   }, [checkLocalStorage, initBlogs])
+
 
   return (
     <div>
