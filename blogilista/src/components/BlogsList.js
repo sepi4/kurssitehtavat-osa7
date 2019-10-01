@@ -7,8 +7,6 @@ import {
   Segment,
 } from 'semantic-ui-react'
 
-// import Blog from './Blog'
-
 const BlogsList = (props) => {
 
   const sortedBlogs = props.blogit.sort((a, b) => -(a.likes - b.likes))
