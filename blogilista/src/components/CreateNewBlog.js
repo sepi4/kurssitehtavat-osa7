@@ -36,18 +36,18 @@ const CreateNewBlog = (props) => {
       <h2>create new blog</h2>
       <Form.Field>
         <label>title</label>
-        <input name="title" />
+        <input id='title-input' name="title" />
       </Form.Field>
       <Form.Field>
         <label>author</label>
-        <input name="author" />
+        <input id='author-input' name="author" />
       </Form.Field>
       <Form.Field>
         <label>url</label>
-        <input name="url" />
+        <input id='url-input' name="url" />
       </Form.Field>
       <Form.Field>
-        <Button primary type="submit">create</Button>
+        <Button primary id='create-btn' type="submit">create</Button>
       </Form.Field>
     </Form>
   </div>

@@ -77,7 +77,7 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
 blogsRouter.post('/:id/comments', async (request, response, next) => {
   try {
-    console.log(request)
+    // console.log(request)
     const commentToAdd = request.body.comment
     if (commentToAdd.length === 0) {
       return response.status(400).json({ error: 'empty comment' })
