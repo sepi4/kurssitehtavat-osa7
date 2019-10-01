@@ -30,6 +30,7 @@ const LoginForm = (props) => {
             <input
               type='text'
               name='username'
+              id='username'
             />
           </label>
         </Form.Field>
@@ -38,6 +39,7 @@ const LoginForm = (props) => {
             <input
               type='password'
               name='password'
+              id='password'
             />
           </label>
         </Form.Field>
