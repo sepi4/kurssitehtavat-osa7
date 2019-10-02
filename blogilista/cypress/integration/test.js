@@ -32,6 +32,7 @@ describe('Bloglist app', function() {
 
 
   describe('after login test', function() {
+    // delete all blogs and login as root user
     beforeEach(function() {
       cy.request('POST', 'http://localhost:3003/api/testing/reset')
 
@@ -46,7 +47,7 @@ describe('Bloglist app', function() {
         .click()
     })
 
-    it('test new blog creation', function() {
+    function createBlog() {
       cy.get('#new-blog-btn')
         .click()
       cy.contains('create new blog')
@@ -63,10 +64,34 @@ describe('Bloglist app', function() {
         .type(url)
       cy.get('#create-btn')
         .click()
+      return title
+    }
 
-      cy.contains(title)
+
+    it('test new comment creation', function() {
+      createBlog()
+
+      cy.get('.segment > .ui > .item > a')
+        .click()
+
+      const comment = `comment ${Math.random()}`
+
+      cy.get('input')
+        .type(comment)
+      cy.contains('add comment')
+        .click()
+
+      cy.contains(comment)
+    })
+
+    it('new comment creation', function() {
+      createBlog()
+      cy.get(':nth-child(2) > a')
+        .click()
+
+      cy.contains('root')
+      cy.contains('1')
     })
 
   })
-
 })
